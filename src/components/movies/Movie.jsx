@@ -6,13 +6,21 @@ import CardMedia from "@mui/material/CardMedia";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
+import Button from "@mui/material/Button";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import { MoviesContext } from "../../context/movies-context";
+import { notification } from "../../helpers/notification";
 
-const Movie = ({ movie }) => {
+const Movie = ({ movie, isWatchedMovie = false }) => {
   const [isFav, setIsFav] = useState(false);
-  const { toggleFavMovie, favoriteMovies } = useContext(MoviesContext);
+  const { toggleFavMovie, favoriteMovies, removeFromWatched } =
+    useContext(MoviesContext);
+
+  const removeWatchedHandler = () => {
+    removeFromWatched(movie.imdbID);
+    notification("success", "Movie removed successfully!");
+  };
 
   useEffect(() => {
     const isFavMovie = favoriteMovies.findIndex(
@@ -30,7 +38,12 @@ const Movie = ({ movie }) => {
     <Card
       sx={{
         position: "relative",
-        "& button": { position: "absolute", top: 0, left: 0, bgcolor: "black" },
+        "& button:first-of-type": {
+          position: "absolute",
+          top: 0,
+          left: 0,
+          bgcolor: "black",
+        },
       }}
     >
       <Link to={`/movies/${movie.imdbID}`}>
@@ -50,9 +63,16 @@ const Movie = ({ movie }) => {
           </Typography>
         </CardContent>
       </Link>
-      <IconButton onClick={toggleFavMovie.bind(null, movie)}>
+
+      <IconButton
+        onClick={() => {
+          toggleFavMovie(movie);
+          notification("success", "favorite list updated!");
+        }}
+      >
         {isFav ? <FavoriteIcon /> : <FavoriteBorderIcon />}
       </IconButton>
+      {isWatchedMovie && <Button onClick={removeWatchedHandler}>Remove</Button>}
     </Card>
   );
 };

@@ -6,24 +6,18 @@ import MovieCreationIcon from "@mui/icons-material/MovieCreation";
 import InfoWidget from "./InfoWidget";
 import Stack from "@mui/material/Stack";
 import Rating from "@mui/material/Rating";
-
+import { notification } from "../../helpers/notification";
 import Button from "@mui/material/Button";
 import { MoviesContext } from "../../context/movies-context";
-import { toast } from "react-toastify";
 
 const MovieInfo = ({ movie }) => {
-  const { addToWatched, watchedMovies } = useContext(MoviesContext);
-  console.log(watchedMovies);
+  const { addToWatched } = useContext(MoviesContext);
+
   const [userRating, setUserRating] = useState(0);
 
   const addWatchedMovieHandler = () => {
     addToWatched(movie);
-
-    toast.success("Movie added successfully", {
-      position: "top-right",
-      autoClose: 3000,
-      theme: "light",
-    });
+    notification("success", "Movie added successfully!");
   };
 
   return (

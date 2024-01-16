@@ -1,8 +1,11 @@
+import PageContent from "../components/UI/PageContent";
+import WatchedList from "../components/watchedMovies/WatchedList";
+
 const WatchedPage = () => {
   return (
-    <div>
-      <h1>WatchedPage</h1>
-    </div>
+    <PageContent>
+      <WatchedList />
+    </PageContent>
   );
 };
 

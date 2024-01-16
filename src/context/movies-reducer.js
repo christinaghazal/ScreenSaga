@@ -9,6 +9,12 @@ const moviesReducer = (state = initialMoviesState, action) => {
   }
 
   if (action.type === "REMOVE") {
+    return {
+      ...state,
+      watchedMovies: state.watchedMovies.filter(
+        (movie) => movie.imdbID !== action.id,
+      ),
+    };
   }
 
   if (action.type === "TOGGLE_FAV") {

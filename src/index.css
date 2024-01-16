@@ -45,6 +45,8 @@ img {
   height: 400px;
   object-fit: contain;
 }
+
+
 .spinner {
   position: absolute;
   width: 56px;
